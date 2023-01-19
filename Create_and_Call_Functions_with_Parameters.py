@@ -1,67 +1,65 @@
 # Sergio Marquez, CIS261, Create and Call Functions with Parameters
 
-def get_employee_name():
-    name = input("Enter employee name: ")
-    return name
+def GetEmpName():
+    empname = input("Enter employee name: ")
+    return empname
 
-def get_hours_worked():
+def GetHoursWorked():
     hours = float(input("Enter hours worked: "))
     return hours
 
-def get_hourly_rate():
-    rate = float(input("Enter hourly rate: "))
-    return rate
+def GetHourlyRate():
+    hourlyrate = float(input("Enter hourly rate: "))
+    return hourlyrate
 
-def get_tax_rate():
-    tax_rate = float(input("Enter income tax rate: "))
-    return tax_rate
+def GetTaxRate():
+    taxrate = float(input("Enter income tax rate: "))
+    return taxrate
 
-def calculate_pay(hours, rate, tax_rate):
-    gross_pay = hours * rate
-    tax = gross_pay * tax_rate
-    net_pay = gross_pay - tax
-    return gross_pay, tax, net_pay
+def CalcTaxAndNetPay(hours, hourlyrate, taxrate):
+    grosspay = hours * hourlyrate
+    incometax = grosspay * taxrate
+    netpay = grosspay - incometax
+    return grosspay, incometax, netpay
 
-def display_employee_info(name, hours, rate, gross_pay, tax_rate, tax, net_pay):
-    print(f"Employee Name: {name}")
-    print(f"Hours worked: {hours}")
-    print(f"Hourly rate: {rate}")
-    print(f"Gross pay: {gross_pay}")
-    print(f"Income tax rate: {tax_rate}")
-    print(f"Income tax: {tax}")
-    print(f"Net pay: {net_pay}")
+def printinfo(empname, hours, hourlyrate, grosspay, taxrate, incometax, netpay):
+    print("Name:  ", empname) 
+    print("Hours Worked: ", f"{hours:,.2f}")
+    print("Hourly Rate:  $", f"{hourlyrate:,.2f}")
+    print("Gross Pay:  $", f"{grosspay:,.2f}")
+    print("Tax Rate:  ", f"{taxrate:.1%}")
+    print("Income Tax:  $", f"{incometax:,.2f}")
+    print("Net Pay:  $", f"{netpay:,.2f}")
+    print()
 
-def display_totals(num_employees, total_hours, total_gross_pay, total_tax, total_net_pay):
-    print("")
-    print(f"Total number of employees: {num_employees}")
-    print(f"Total hours worked: {total_hours}")
-    print(f"Total gross pay: {total_gross_pay}")
-    print(f"Total income tax: {total_tax}")
-    print(f"Total net pay: {total_net_pay}")
+def PrintTotals(TotEmployees, TotHours, TotGrossPay, TotTax, TotNetPay):    
+    print()
+    print(f"Total Number Of Employees: {TotEmployees}")
+    print(f"Total Hours Worked: {TotHours:,.2f}")
+    print("Total Gross Pay:  $", f"{TotGrossPay:,.2f}")
+    print("Total Tax:  $", f"{TotTax:,.1f}")
+    print("Total Net Pay:  $", f"{TotNetPay:,.2f}")
 
-num_employees = 0
-total_hours = 0
-total_gross_pay = 0
-total_tax = 0
-total_net_pay = 0
+if __name__ == "__main__":
+    TotEmployees = 0
+    TotHours = 0.00
+    TotGrossPay = 0.00
+    TotTax = 0.00
+    TotNetPay = 0.00
+    while True:
+        empname = GetEmpName()
+        if (empname.upper() == "END"):
+            break
+        hours = GetHoursWorked()
+        hourlyrate = GetHourlyRate()
+        taxrate = GetTaxRate()
+        
+        grosspay, incometax, netpay = CalcTaxAndNetPay(hours, hourlyrate, taxrate)
+        printinfo(empname, hours, hourlyrate, grosspay, taxrate, incometax, netpay)
+        TotEmployees += 1
+        TotHours += hours
+        TotGrossPay += grosspay
+        TotTax += incometax
+        TotNetPay += netpay
 
-while True:
-    print("")
-    name = get_employee_name()
-    if name.lower() == "end":
-        break
-
-    hours = get_hours_worked()
-    rate = get_hourly_rate()
-    tax_rate = get_tax_rate()
-    gross_pay, tax, net_pay = calculate_pay(hours, rate, tax_rate)
-
-    display_employee_info(name, hours, rate, gross_pay, tax_rate, tax, net_pay)
-
-    num_employees += 1
-    total_hours += hours
-    total_gross_pay += gross_pay
-    total_tax += tax
-    total_net_pay += net_pay
-
-display_totals(num_employees, total_hours, total_gross_pay, total_tax, total_net_pay)
+    PrintTotals (TotEmployees, TotHours, TotGrossPay, TotTax, TotNetPay)
